@@ -2,6 +2,10 @@ package co.micol.student.dto;
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data // https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.24
+
 public class StudentVO {   //Dto
 	private String studentId;
 	private String name;
@@ -9,54 +13,6 @@ public class StudentVO {   //Dto
 	private String major;
 	private String address;
 	private String tel;
-
-	public String getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getMajor() {
-		return major;
-	}
-
-	public void setMajor(String major) {
-		this.major = major;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
 
 	@Override
 	public String toString() {
