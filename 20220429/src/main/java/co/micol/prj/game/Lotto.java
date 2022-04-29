@@ -29,6 +29,9 @@ public class Lotto {
 		while (gameNum.size() < 6) {
 			System.out.println("1~45까지 중복되지않는 숫자 6자를 입력하세요");
 			int input = scn.nextInt();
+			if (input > 45) {
+				System.out.println("45이하의 숫자를 입력해주세");
+			}
 			gameNum.add(input);
 			scn.nextLine();
 		}
