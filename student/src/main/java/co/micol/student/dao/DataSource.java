@@ -11,9 +11,9 @@ public class DataSource {
 	//싱글톤 클래스 패턴
 	
 	// 클래스 객체를 하나 만들고
-	private static DataSource dataSource = new DataSource();
+	private static DataSource dataSource = new DataSource(); //s
 	// 외부에서 호출 못하게 프라이빗으로 지정해서 생성자 만들고
-	private DataSource() {};
+	private DataSource() {}; //s
 	
 	private Connection conn; // 자신을 객체로 만들고
 	private  String driver;// = "oracle.jdbc.driver.OracleDriver";
@@ -21,13 +21,15 @@ public class DataSource {
 	private  String user;// = "jin";
 	private  String password;// = "1234";
 
-	public static DataSource getInstance() {
-		return dataSource;
+	public static DataSource getInstance() { //s
+		return dataSource; 
 	}
+	
+	
 	public Connection getConnection() {  //static
 		dbconfiguration();
 		try {
-			Class.forName(driver);
+			Class.forName(driver);  
 			conn = DriverManager.getConnection(url, user, password);
 			System.out.println("DB 연결 성공!!");
 			
@@ -51,8 +53,5 @@ public class DataSource {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
 	} 
-	
-	
 }
