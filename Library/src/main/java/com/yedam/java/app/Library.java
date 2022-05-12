@@ -1,6 +1,5 @@
 package com.yedam.java.app;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,6 +8,7 @@ import com.yedam.java.service.LibraryService;
 import com.yedam.java.service.LibraryServiceImpl;
 
 public class Library {
+
 	private Scanner scanner = new Scanner(System.in);
 	private LibraryService dao = new LibraryServiceImpl();
 
@@ -28,7 +28,7 @@ public class Library {
 				rentalBook();
 			} else if (menuNo == 6) {
 				returnBook();
-			} else if(menuNo == 7) {
+			} else if (menuNo == 7) {
 				insertBookInfo();
 			} else if (menuNo == 9) {
 				end();
@@ -61,81 +61,84 @@ public class Library {
 			System.out.println(book);
 		}
 	}
-	
+
 	private void selectBookInfo() {
 		String name = inputBookName();
 		BookVO book = dao.selectBookInfo(name);
-		if(book == null) {
+		if (book == null) {
 			System.out.println("해당 책은 등록되어 있지 않습니다.");
-		}else {
+		} else {
 			System.out.println(book);
 		}
 	}
-	
+
 	private void selectSearchBookList() {
 		String keyword = inputBookKeyword();
 		List<BookVO> list = dao.selectBookList(keyword);
-		for(BookVO book : list) {
+		// DB에서 처리하고 출력만 하는것.
+		for (BookVO book : list) {
 			System.out.println(book);
 		}
-		/*List<BookVO> list = dao.selectBookList(keyword);
-		for(BookVO book : list) {
-			if(book.getContent().indexOf(keyword) != -1) {
-				System.out.println(book);
-			}
-		}*/		
+
+		// 전체를 가져와서 Java에서 해당 문자를 포함하는지 확인하여 출력
+		/*
+		 * for(BookVO book : list) { if(book.getContent().indexOf(keyword) != -1) {
+		 * System.out.println(book); } }
+		 */
 	}
-	
+
 	private void selectRentalBookList() {
 		List<BookVO> list = dao.selectRentalBookList();
-		for(BookVO book : list) {
+		for (BookVO book : list) {
 			System.out.println(book);
 		}
 	}
-	
+
 	private void rentalBook() {
 		String name = inputBookName();
-		BookVO book = dao.selectBookInfo(name);
-		if(book == null) {
+		BookVO book = dao.selectBookInfo(name); // 해당 책이 있는지 확인.
+		if (book == null) {
 			System.out.println("해당 책은 등록되어 있지 않습니다.");
-		}else if(book.getRental() == 1) {
+		} else if (book.getRental() == 1) {
 			System.out.println("해당 책은 이미 대여중입니다.");
-		}else {
+		} else {
 			dao.rentalBook(name);
-		}	
+		}
 	}
-	
+
 	private void returnBook() {
 		String name = inputBookName();
 		BookVO book = dao.selectBookInfo(name);
-		if(book == null) {
+		if (book == null) {
 			System.out.println("해당 책은 등록되어 있지 않습니다.");
-		}else {
+		} else {
 			dao.returnBook(name);
 		}
 	}
+
 	private void insertBookInfo() {
 		BookVO book = inputBookInfo();
 		dao.insertBook(book);
 	}
+
 	private void end() {
 		System.out.println("프로그램이 종료되었습니다.");
 	}
-	
+
 	private String inputBookName() {
 		String name = null;
 		System.out.print("책제목>");
 		name = scanner.nextLine();
 		return name;
 	}
-	
+
 	private String inputBookKeyword() {
 		String keyword = null;
 		System.out.print("검색내용>");
 		keyword = scanner.nextLine();
 		return keyword;
 	}
-	
+
 	private BookVO inputBookInfo() {
 		BookVO book = new BookVO();
 		System.out.print("책제목>");
