@@ -71,7 +71,7 @@ public class MemoApp2 {
 	private void insertMemoInfo() {   // 등록
 		MemoVO memo = inputMemoInfo();
 		dao.insertMemo(memo);
-		System.out.println("한건이 등록되었습니다.");
+		System.out.println("1건이 등록되었습니다.");
 	}
 	
 	private void deleteMemo() {
@@ -79,7 +79,7 @@ public class MemoApp2 {
 		int num = inputNum();
 		memo.setNum(num);
 		dao.deleteMemo(memo);
-		System.out.println("한건이 삭제되었습니다.");
+		System.out.println("1건이 삭제되었습니다.");
 	}
 	
 	private void updateMemo() {
@@ -91,7 +91,7 @@ public class MemoApp2 {
 		String name = scanner.nextLine();
 		memo.setContent(name);
 		dao.updateMemo(memo);
-		System.out.println("한건이 수정되었습니다.");
+		System.out.println("1건이 수정되었습니다.");
 		
 		
 	}
@@ -114,12 +114,7 @@ public class MemoApp2 {
 		return num;
 	}
 
-	private String inputBookKeyword() {
-		String keyword = null;
-		System.out.print("검색내용>");
-		keyword = scanner.nextLine();
-		return keyword;
-	}
+	
 
 	private MemoVO inputMemoInfo() {
 		

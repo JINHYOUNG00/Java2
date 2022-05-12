@@ -18,18 +18,6 @@ public class MemoServiceImpl implements MemoService {
 	private PreparedStatement psmt;
 	private ResultSet rs;
 
-	private void close() {
-		try {
-			if (rs != null)
-				rs.close();
-			if (psmt != null)
-				psmt.close();
-			if (conn != null)
-				conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public void insertMemo(MemoVO memo) {
@@ -53,7 +41,7 @@ public class MemoServiceImpl implements MemoService {
 	@Override
 	public void updateMemo(MemoVO memo) {
 		try {
-			conn = dao.getConnection(); // DB에 연결통로를 만듦.
+			conn = dao.getConnection();
 			String sql = "UPDATE MEMO_LIST SET CONTENT = ? WHERE NUM = ?";
 			psmt = conn.prepareStatement(sql);  // DB에 sql문을 전달
 			psmt.setString(1, memo.getContent());
@@ -64,18 +52,14 @@ public class MemoServiceImpl implements MemoService {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
 		}
-
 	}
 
 	@Override
 	public void deleteMemo(MemoVO memo) {
-
-		int n = 0;
+		conn = dao.getConnection();
+		String sql = "DELETE FROM MEMO_LIST WHERE NUM = ?";
 		
-		String sql = "DELETE FROM USERS WHERE NUM = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, memo.getNum());
@@ -92,22 +76,19 @@ public class MemoServiceImpl implements MemoService {
 		MemoVO memo = new MemoVO();
 		try {
 			conn = dao.getConnection(); // connection을 가져옴.
-			String sql = "SELECT * FROM MEMO_LIST WHERE TITLE = ?";
+			String sql = "SELECT * FROM MEMO_LIST WHERE NUM = ?";
 			psmt = conn.prepareStatement(sql); // sql문을 DB에 전송하여 쿼리문을 진행함.
 			psmt.setInt(1, num); // ? 값채우기
 			rs = psmt.executeQuery(); // 결과를 rs(result Set)에 받음.
 			if (rs.next()) { // 하나씩 읽어서 리스트에 담음.
+				memo.setNum(rs.getInt("NUM"));
 				memo.setTitle(rs.getString("TITLE"));
 				memo.setWriter(rs.getString("WRITER"));
 				memo.setContent(rs.getString("CONTENT"));
-				memo.setNum(rs.getInt("NUM"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
 		}
-
 		return memo;
 
 	}
@@ -131,10 +112,7 @@ public class MemoServiceImpl implements MemoService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close();
 		}
-
 		return list;
 	}
 
